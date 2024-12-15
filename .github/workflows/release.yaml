@@ -37,4 +37,4 @@ jobs:
           git config --global user.name 'AI Arena'
           git config --global user.email 'staff@aiarena.net'
           git commit -a -m 'Release ${{ steps.version.outputs.tag }}'
-          git push release
+          git push origin release --force
