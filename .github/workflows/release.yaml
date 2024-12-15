@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Select release version
         id: version
-        run: printf 'tag=${{ secrets.DOCKERHUB_USERNAME }}/discordbot:%(%Y.%m.%d-%H.%M)T' >> $GITHUB_OUTPUT
+        run: printf 'tag=${{ env.DOCKERHUB_USERNAME }}/discordbot:%(%Y.%m.%d-%H.%M)T' >> $GITHUB_OUTPUT
 
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -18,7 +18,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Publish Docker image
@@ -35,4 +35,4 @@ jobs:
           git config --global user.name 'AI Arena'
           git config --global user.email 'staff@aiarena.net'
           git commit -a -m 'Release ${{ steps.version.outputs.tag }}'
-          git push releases
+          git push release
