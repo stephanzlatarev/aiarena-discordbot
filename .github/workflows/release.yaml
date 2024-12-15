@@ -24,7 +24,7 @@ jobs:
           cp -vr kubernetes ${{ runner.temp }}
           sed -i -e 's|aiarena/discordbot|${{ steps.version.outputs.tag }}|g' ${{ runner.temp }}/kubernetes/deployment.yaml
           git checkout kubernetes
-          rm -r ./
+          rm -r ./*
           cp -vr ${{ runner.temp }}/kubernetes/ ./
           ls -l
           git commit -a -m 'Release ${{ steps.version.outputs.tag }}'
