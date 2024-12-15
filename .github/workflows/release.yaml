@@ -17,24 +17,18 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Publish Docker image
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: ${{ steps.version.outputs.tag }}
-
       - name: Update Kubernetes descriptors
-        run: sed -i -e 's|aiarena/discordbot|${{ steps.version.outputs.tag }}|g' kubernetes/deployment.yaml
-
-      - name: Push to release branch
         run: |
           git config --global user.name 'AI Arena'
           git config --global user.email 'staff@aiarena.net'
+          pwd
+          echo 'Temporary folder: ${{ runner.temp }}'
+          cp -vr kubernetes ${{ runner.temp }}
+          ls -l ${{ runner.temp }}
+          ls -l ${{ runner.temp }}/kubernetes
+          sed -i -e 's|aiarena/discordbot|${{ steps.version.outputs.tag }}|g' ${{ runner.temp }}/kubernetes/deployment.yaml
+          git checkout kubernetes
+          cp -vr ${{ runner.temp }}/kubernetes .
+          ls -l
           git commit -a -m 'Release ${{ steps.version.outputs.tag }}'
-          git push origin release --force
+          git push
