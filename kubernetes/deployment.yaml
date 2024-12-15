@@ -19,7 +19,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: bot
-          image: stephanzlatarev/discordbot:2024.12.15-21.20
+          image: aiarena/discordbot
           command: ["sh", "-c", "cp /etc/discordbot/config/config.py /bot/config.py; /usr/local/bin/python ./bot.py"]
           volumeMounts:
             - name: config
