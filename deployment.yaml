@@ -19,7 +19,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: bot
-          image: stephanzlatarev/discordbot:2024.12.16-07.58
+          image: stephanzlatarev/discordbot:2024.12.16-08.04
           env:
             - name: SECRETS
               value: "/etc/secrets"
